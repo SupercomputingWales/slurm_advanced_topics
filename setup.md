@@ -14,6 +14,6 @@ A node reservation is created in partition c_compute_mdi1. To access it users ne
 #SBATCH --reservation=training
 #SBATCH --account=scw1148
 ~~~
-
+{: .language-bash}
 
 {% include links.md %}
