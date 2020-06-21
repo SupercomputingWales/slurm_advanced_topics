@@ -1,9 +1,9 @@
 ---
-title: "Efficient job scripts"
+title: "Working with GPUs"
 teaching: 0
 exercises: 0
 questions:
-- "Key question (fixed)"
+- "TO BE ADDED"
 objectives:
 - "First learning objective. (fixed)"
 keypoints:

@@ -1,9 +1,9 @@
 ---
-title: "Introduction"
+title: "Efficient job scripts"
 teaching: 0
 exercises: 0
 questions:
-- "Key question (fixed)"
+- "TO BE ADDED"
 objectives:
 - "First learning objective. (fixed)"
 keypoints:
