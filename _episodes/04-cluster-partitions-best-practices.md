@@ -11,12 +11,12 @@ objectives:
 keypoints:
 - "Do NOT run long jobs in the login nodes"
 - "Check your quota regularly"
-- "Submit jobs to appropiate partitions"
+- "Submit jobs to appropriate partitions"
 ---
 This section introduces best practices when working on SCW systems.
 
 ## Login nodes
-**Do NOT run long jobs in the login nodes**. Remember that login nodes (cl1, cl2, cla1) are shared nodes used by all users. Short testing, compilation, file transfer, light debugging are typically ok. Large MPI jobs are definetly not. If we detect heavy jobs running on the system the application will be terminated without notice.
+**Do NOT run long jobs in the login nodes**. Remember that login nodes (cl1, cl2, cla1) are shared nodes used by all users. Short testing, compilation, file transfer, light debugging are typically ok. Large MPI jobs are definitely not. If we detect heavy jobs running on the system the application will be terminated without notice.
 
 > ## Who is at home?
 > To help you realize the shared nature of the login nodes, try running this command:
@@ -38,7 +38,7 @@ Linux allows you to configure your work environment in detail. This is done by r
 > ## Whenever possible:
 >
 > - Estimate the time and resources that your job needs. This will reduce the time necessary to grant resources.
-> - Try to avoid submitting a massive numer of small jobs since this creates an overhead in resource provision. Whenever possible, stack small jobs in single bigger jobs.
+> - Try to avoid submitting a massive number of small jobs since this creates an overhead in resource provision. Whenever possible, stack small jobs in single bigger jobs.
 > - Avoid creating thousands of small files. This has a negative impact on the global filesystem. Better to have a smaller number or larger files.
 > Run a small test case (dev partition) before submitting a large job, to make sure it works as expected.
 > - Use *--exclusive*, only if you are certain that you require the resources (cpus, memory) of a full node.
@@ -124,14 +124,14 @@ In the output above the user has access to several partitions and should submit 
 
 ## Scratch
 
-If your compute jobs on the cluster produce intermadiate results, using your scratch directory can be beneficial:
+If your compute jobs on the cluster produce intermediate results, using your scratch directory can be beneficial:
 - The scratch filesystem has a faster I/O speed than home.
 - It has a higher default quota (5 Tb) so you can store bigger input files if necessary. 
 
 Remember to instruct your scripts to clean after themselves by removing unnecessary data, this prevents filling up your quota. Remember that unused files on scratch might be removed without previous notice. 
 
 ## Your quota
-On SCW systems there are two types of quotas: storage and files. Storage quota is measured in bytes (kb, Mb, Tb) while file quota is measured in individual files (indepnedent of their size). You can check your current quota with the command **myquota**:
+On SCW systems there are two types of quotas: storage and files. Storage quota is measured in bytes (kb, Mb, Tb) while file quota is measured in individual files (independent of their size). You can check your current quota with the command **myquota**:
 <pre style="color: silver; background: black;">[new_user@cl1 ~]$ myquota
 HOME DIRECTORY c.medib
      Filesystem   space   quota   limit   grace   files   quota   limit   grace
@@ -155,7 +155,7 @@ On scratch, new users are allocated a default quota of 5 Tb and 3M files. The ma
 
 > ## Checking your usage
 > 
-> If you are worried about hitting your quota, and want to do some cleanup but are wondering which might be the problematic directories, Linux has an utility that can help you. 
+> If you are worried about hitting your quota, and want to do some clean-up but are wondering which might be the problematic directories, Linux has an utility that can help you. 
 >
 > Try running this command in your home directory:
 > 
@@ -174,7 +174,7 @@ On scratch, new users are allocated a default quota of 5 Tb and 3M files. The ma
 >
 > Please note that although we try to keep your data as safe as possible, at the moment **we do not offer backups**. So please make sure to have a backup of critical files and transfer important data to a more permanent storage.
 >
-> Did you know that Cardiff University offer a **Research Data Store**, and Cardiff reserarchers could apply for 1Tb of storage (more depending on certain)? Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
+> Did you know that Cardiff University offer a **Research Data Store**, and Cardiff researchers could apply for 1Tb of storage (more depending on certain)? Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
 {: .callout}
 
 {% include links.md %}

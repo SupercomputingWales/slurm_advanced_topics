@@ -11,7 +11,7 @@ objectives:
 - "Learn how to connect to Hawk's VNC server."
 keypoints:
 - "It is possible to use Graphical User Interfaces when working on Hawk."
-- "X11 is a system that enables the disply of graphical windows from a remote server"
+- "X11 is a system that enables the display of graphical windows from a remote server"
 - "Almost all popular SSH clients support X11"
 - "Hawk provides VNC capabilities that enables the use of a remote Linux desktop."
 ---
@@ -24,7 +24,7 @@ Linux systems natively come with X11 support so that no extra software is requir
 > ## Common X11 servers
 >
 > On Windows, **Xming and Putty** are classic applications used together to connect via SSH to a remote host and render graphics. **MobaXterm** is another enhanced terminal for Windows.
-> On MacOS, **XQuartz** is a project that aims to provide Mac systems with X11 suport.
+> On MacOS, **XQuartz** is a project that aims to provide Mac systems with X11 support.
 {: .callout}
 
 ## Connecting to Hawk using X11
@@ -86,7 +86,7 @@ VNC is a Virtual Network Computing desktop-sharing system that allows to remotel
  - With VNC the graphical processing runs on the remote server transferring only a "screenshot" to the local machine. With X11, the application sends the instructions to the local machine and behaves as if the application were run locally. This can be problematic, for example, when trying to visualize simulation results with big data files.
  - With VNC your application survives disconnecting from the server. For example, if you need to close your laptop and change location, you can reconnect to the VNC server and continue working with the application. This is not possible with X11, since when the X11 server dies, the windows disappear.
 
-We have recently setup a VNC server on Hawk to address these issues. To connect to the server you need to 1) create a session in the server and 2) connect via SSH tunneling with a VNC client. 
+We have recently setup a VNC server on Hawk to address these issues. To connect to the server you need to 1) create a session in the server and 2) connect via SSH tunnelling with a VNC client. 
 
 > ## Create a VNC session
 >
@@ -120,12 +120,12 @@ We have recently setup a VNC server on Hawk to address these issues. To connect 
 > 12. If completely finished close down VNC server by logging back into clvnc1 and running (where screen number is the number obtained in step 4)
 >     <pre style="color: silver; background: black;">
 >     $ vncserver -list
->     $ vncserver -kill :<screen number>
->     </p>
+>     $ vncserver -kill :(screen number)
+>     </pre>
 > 13. Logout of VNC server to return to Hawk.
 >     <pre style="color: silver; background: black;">
 >     $ exit 
->     </p>
+>     </pre>
 {: .checklist}
 
 

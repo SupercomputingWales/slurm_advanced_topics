@@ -21,7 +21,7 @@ A basic and dependable Command Line Interface (CLI) text editor, Nano is arguabl
 <pre style="color: silver; background: black;">$ nano </pre>
 This should display a "new buffer" in the terminal waiting for text input. The terminal window should look something like this:
 <img src="{{ page.root }}/fig/Nano-home-arrows.png" alt="Nano home" width="50%" height="50%" />
-With a top line showing Nano's version and current filename, a white rectagle showing the position of the cursor, and a bottom menu with common commands.
+With a top line showing Nano's version and current filename, a white rectangle showing the position of the cursor, and a bottom menu with common commands.
 
 The caret symbol “^” represents the control key <kbd>Ctrl</kbd>.  So "^X" means that you should press <kbd>Ctrl</kbd>+<kbd>X</kbd> to quit nano. As you type commands, the menu displayed at the bottom of your screen will update with the currently available options. To cancel a command use <kbd>Ctrl</kbd>+<kbd>C</kbd>.
 
@@ -36,7 +36,7 @@ Save in a new file nano-sorted-rows.txt
 
 ## Gedit
 <img src="{{ page.root }}/fig/Gedit-logo.png" alt="Gedit Logo" width="10%" height="10%" />
-The GNOME desktop text editor. Gedit is another basic Linux text editor, the main difference with Nano is that it is a graphical editor so you will need to use X11 (see lesson 1) to work with it. When openning Gedit it will open a new window that resembles Windows' notepad.
+The GNOME desktop text editor. Gedit is another basic Linux text editor, the main difference with Nano is that it is a graphical editor so you will need to use X11 (see lesson 1) to work with it. When opening Gedit it will open a new window that resembles Windows' notepad.
 <img src="{{ page.root }}/fig/Gedit-home.png" alt="Gedit home" width="50%" height="50%" />
 > ## Sort the rows... again
 >
@@ -58,7 +58,7 @@ Vim has two main modes of operation "Normal" and "Editing" mode. Normal mode is 
 
 > ## Copy and paste
 >
-> Open unsorted-rows.txt. Make sure you are on normal mode and and type <kbd>v</kbd> to enter the "Visual" mode and use your keyboard arrows to select text. Then type <kbd>y</kbd> to copy or <kbd>c</kbd> to cut. Move the cursor to the position were you want to paste the text and type <kbd>p</kbd>.
+> Open unsorted-rows.txt. Make sure you are on normal mode and type <kbd>v</kbd> to enter the "Visual" mode and use your keyboard arrows to select text. Then type <kbd>y</kbd> to copy or <kbd>c</kbd> to cut. Move the cursor to the position where you want to paste the text and type <kbd>p</kbd>.
 >
 > Try doing this again, but this time enter the Visual Block mode with <kbd>Ctrl</kbd>+<kbd>v</kbd>. What did you notice?
 {: .challenge}
@@ -100,7 +100,7 @@ Short summary of Vim commands.
   <td> <kbd>0</kbd> </td>
   <td> Move to beginning of line </td>
   <td> <kbd>g</kbd>+<kbd>g</kbd> </td>
-  <td> Move to beggining of file </td>
+  <td> Move to beginning of file </td>
  </tr>
  <tr>
   <td> <kbd>$</kbd> </td>
@@ -116,7 +116,7 @@ Short summary of Vim commands.
 >
 > Lets try Vim with yet again the same example.
 >
-> Open the file called unsorted-rows.txt and try sorting the rows but this time, try moving the numbers infront of the word 'job'.
+> Open the file called unsorted-rows.txt and try sorting the rows but this time, try moving the numbers in front of the word 'job'.
 > <img src="{{ page.root }}/fig/Gedit-rows.png" alt="Gedit rows" width="50%" height="50%" />
 > Save in a new file vim-sorted-rows.txt. Would this have been easier with Nano? What if the file contained 100s of lines? 
 {: .challenge}
@@ -124,21 +124,21 @@ Short summary of Vim commands.
 
 > ## A tutor for you ...
 >
-> If Vim is available in your platform, it is most likely that vimtutor is also available. Vimtutor is at is core a text file with some useful exercises designed to help you master Vim. To start it:
+> If Vim is available in your platform, it is most likely that vimtutor is also available. Vimtutor is at its core a text file with some useful exercises designed to help you master Vim. To start it:
 > <pre style="color: silver; background: black;">$ vimtutor </pre>
 >
 {: .callout}
 
 ## Emacs
 <img src="{{ page.root }}/fig/Emacs-logo.png" alt="Emacs logo" width="10%" height="10%" />
-Is another powerful text editor. While Vim has the fastest startup time of the two advanced text editor discussed in this lesson, and is more widespread, Emacs has, arguibly, a more feature-rich environment extending beyond simply word processing and potentially wrapping around everything you do (with some people going as fars as stating that Emacs is a "way of life").
+Is another powerful text editor. While Vim has the fastest start-up time of the two advanced text editor discussed in this lesson, and is more widespread, Emacs has, arguably, a more feature-rich environment extending beyond simply word processing and potentially wrapping around everything you do (with some people going as far as stating that Emacs is a "way of life").
 
 To try Emacs, open it in the command line with:
 <pre style="color: silver; background: black;">$ Emacs </pre>
 <img src="{{ page.root }}/fig/Emacs-home.png" alt="Emacs home" width="50%" height="50%" />
 This will display a black screen with some useful information including its version, licence and some basic commands. More importantly, Emacs let us know about its command grammar where 'C-' means use the <kbd>Ctrl</kbd> key and 'M-' is the <kbd>Alt</kbd> key. This is specially helpful to know when searching for help online about Emacs commands.
 
-Try openning again "unsorted-rows.txt" and do some changes.
+Try opening again "unsorted-rows.txt" and do some changes.
 
 Short summary of Emacs commands.
 
@@ -177,7 +177,7 @@ Short summary of Emacs commands.
   <td> <kbd>Ctrl</kbd>+<kbd>a</kbd> </td>
   <td> Move to beginning of line </td>
   <td> <kbd>Esc</kbd>+<kbd><</kbd> </td>
-  <td> Move to beggining of file </td>
+  <td> Move to beginning of file </td>
  </tr>
  <tr>
   <td> <kbd>Ctrl</kbd>+<kbd>e</kbd> </td>

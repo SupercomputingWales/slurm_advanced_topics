@@ -6,13 +6,14 @@ questions:
 - "How to use SLURM environment variables?"
 - "How to obtain information about jobs and partitions?"
 objectives:
-- "First learning objective. (fixed)"
+- "To learn how to use SLURM environment variables"
+- "Familiarize with some SLURM commands to extract information from jobs and partitions"
 keypoints:
 - "`srun` is used to run an interactive job."
 - "`sbatch` is used to queue a job script for later execution."
 - "SLURM defines several environment variables that can be used within job scripts"
 - "Use replacement patterns to uniquely identify your log files"
-- "SLURM has several command to help you interact with jobs and partitions"
+- "SLURM has several commands to help you interact with jobs and partitions"
 ---
 
 ## How to request resources
@@ -69,7 +70,7 @@ echo “Hello World!”
 ~~~
 {: .language-bash}
 
-In the above Bash script pay attention to the *#SBATCH* entries, these are calls to `sbatch`, the program in charge to submit batch jobs to SLURM. This is were users specify how much resource to request. In this example the script is requesting: 5 tasks, 5 tasks to be run in each node (hence only 1 node), resources to be granted in the *c_compute_mdi1* partition and maximum runtime of 5 minutes. 
+In the above Bash script pay attention to the *#SBATCH* entries, these are calls to `sbatch`, the program in charge to submit batch jobs to SLURM. This is where users specify how much resource to request. In this example the script is requesting: 5 tasks, 5 tasks to be run in each node (hence only 1 node), resources to be granted in the *c_compute_mdi1* partition and maximum runtime of 5 minutes. 
 
 The table below show some common `sbatch` commands (also shared with `srun` except for *--array*):
 <table style="width:100%">
@@ -126,12 +127,12 @@ The table below show some common `sbatch` commands (also shared with `srun` exce
  <tr>
   <td>--mem-per-cpu=</td>
   <td></td>
-  <td>Specify minimum memory required per cpu. Mutually exlusive with --mem and --mem-per-gpu</td>
+  <td>Specify minimum memory required per cpu. Mutually exclusive with --mem and --mem-per-gpu</td>
  </tr>
  <tr>
   <td>--mem-per-gpu=</td>
   <td></td>
-  <td>Specify minimum memory required per allocated GPU. Mutually exlusive with --mem and --mem-per-cpu</td>
+  <td>Specify minimum memory required per allocated GPU. Mutually exclusive with --mem and --mem-per-cpu</td>
  </tr>
  <tr>
   <td>--array=</td>
@@ -206,7 +207,7 @@ These are replacement symbols that help you tag your output scripts. Some of the
 In our simple example script this has the effect of uniquely tagging the output and error files as (for example) *my.job.o.16717342* and *my.job.e.16717342* avoiding rewriting the file in case we were to submit the same job without saving our logs.
 
 ## Environment variables
-As seen previously, SLURM defines several environment variables when we submit a job. These can be used within a job to tag files, directories, make decisions based on resources available and more. The following script shows how to queary these variables:
+As seen previously, SLURM defines several environment variables when we submit a job. These can be used within a job to tag files, directories, make decisions based on resources available and more. The following script shows how to query these variables:
 
 ~~~
 #!/bin/bash --login
@@ -248,7 +249,7 @@ echo Number of cpus: $SLURM_NPROCS >> ${OUTFILE}
 >
 > Try submitting lesson_6/job_script_2.sh.
 > <pre style="color: silver; background: black;">$ sbatch job_script_2.sh </pre>
-> How are we tagging our workdir? Would it be useful to prevent deleting onyutput files created within this directory when running the script again? 
+> How are we tagging our work directory? Would it be useful to prevent deleting any output files created within this directory when running the script again? 
 {: .challenge}
 
 ## Managing jobs

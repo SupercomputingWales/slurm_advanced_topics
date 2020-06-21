@@ -7,11 +7,11 @@ questions:
 objectives:
 - "How to prevent common errors when working with Bash scripts"
 keypoints:
-- "Bash has built in options that allow to check before executing if variables are set in a script."
-- "Trapping errors early is very important and can save time and effort in the long-run."
+- "Bash has built-in options that allow to check before executing if variables are set in a script."
+- "Trapping errors early is very important and can save time and effort in the long run."
 - "Writing maintainable shell scripts makes it easier to come back and read your code."
 ---
-This section describes some Bash options useful when working with scripts in Linux. These are specially important in the context of SLURM job scripts since they help toprevent time consuming errors (e.g. a job waiting in the queue for hours and then crashing in the first minutes or seconds of execution due to variable typo), or more dangerously, undesired data deletion.
+This section describes some Bash options useful when working with scripts in Linux. These are specially important in the context of SLURM job scripts since they help to prevent time consuming errors (e.g. a job waiting in the queue for hours and then crashing in the first minutes or seconds of execution due to variable typo), or more dangerously, undesired data deletion.
 
 ## The Shell
 <img src="{{ page.root }}/fig/shell.png" alt="Shell" width="15%" height="15%" />
@@ -22,7 +22,7 @@ Bash shell is a programming language, and as such, it has its own syntax rules a
 - how to trap error messages
 
 ### Trapping undefined variables
-Bash has a built in command *set* which control shell attributes. In particular, we are interested in *set -u*. From the manual:
+Bash has a built-in command *set* which control shell attributes. In particular, we are interested in *set -u*. From the manual:
 
 ~~~
 -u      Treat  unset  variables  and  parameters other than the special
@@ -32,7 +32,7 @@ Bash has a built in command *set* which control shell attributes. In particular,
         interactive, exits with a non-zero status.
 ~~~
 
-When used within a shell script, *set -u* will trigger and error if an undefied variable is found.
+When used within a shell script, *set -u* will trigger and error if an undefined variable is found.
 
 > ## Define your variables.
 >
@@ -62,7 +62,7 @@ The second useful Bash feature is *set -e*. From the manual:
         before executing all the commands in the subshell.
 ~~~
 
-In short, Bash will stop the program execution if an unhandled error in found. The common way to handle erros in Bash is through conditionals.
+In short, Bash will stop the program execution if an unhandled error in found. The common way to handle errors in Bash is through conditionals.
 
 > ## Catch the error
 >
@@ -71,7 +71,7 @@ In short, Bash will stop the program execution if an unhandled error in found. T
 {: .challenge}
 
 > ## Syntax highlighting
-> A side note on syntax highlighting. It it very useful and some text editors provide it as default (Vim, Emacs). Nano also provide it for a few languages:
+> A side note on syntax highlighting. It is very useful and some text editors provide it as default (Vim, Emacs). Nano also provide it for a few languages:
 > <img src="{{ page.root }}/fig/nano-syntax-highlight-languages.png" alt="nano syntax languages" width="50%" height="50%" />
 > To activate it for Bash, create a .nanorc file in your home directory with the following line:
 > <pre style="color: silver; background: black;">include /usr/share/nano/sh.nanorc</pre>
