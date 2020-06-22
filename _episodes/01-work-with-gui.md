@@ -103,7 +103,7 @@ We have recently setup a VNC server on Hawk to address these issues. To connect 
 >     :1              22063  </pre>
 {: .checklist}
 
-> ## Connect a VNC client.
+> ## Connect a VNC client (MacOS).
 >
 > For this you need to connect to Hawk using a SSH tunnel, some applications such as MobaXterm has this feature integrated. In this example we will use another popular VNC client, TigerVNC.
 >
@@ -128,9 +128,31 @@ We have recently setup a VNC server on Hawk to address these issues. To connect 
 >     </pre>
 {: .checklist}
 
+> ## Connect a VNC client (Windows).
+>
+> On Windows, MobaXterm has an integrated VNC client that works well.
+>
+> {:start="5"} 
+> 5.  Download and install MobaXterm from their official <a href="https://mobaxterm.mobatek.net" target="_blank">website</a>.
+> 6.  Open MobaXterm and head to Session->VNC. You should see the following window:
+      <img src="{{ page.root }}/fig/MobaXterm-VNC-settings-marked.png" alt="MobaXterm VNC connection" width="40%" height="40%" />
+> 7.  On the Basic VNC settings, set *clvnc1* as the Remote Hostname and set port to the port number obtained in step 4 (e.g. 5901).
+> 8.  On the Network settings tab, tick "Connect through SSH gateway" and set *hawklogin.cf.ac.uk* as the "Gateway SSH server", port 22 and use your Hawk username.
+> 9.  Click OK and you will be prompted for your Hawk password (you can optionally let MobaXterm save it), then you will be prompted by the password set on step 3 above (you can also optionally let MobaXterm to save it).
+> 10. You should now have a VNC Linux desktop.
+> 11. To open an GUI application (e.g. gview), run a terminal window within VNC’s desktop (Applications -> System Tools -> Terminal). Within the terminal load the required module (e.g. module load gaussian/09c01). Run the desired application (e.g. gview)
+> 12. Once finished just close window.
+> 13. If completely finished close down VNC server by logging back into clvnc1 and running (where screen number is the number obtained in step 4)
+>     <pre style="color: silver; background: black;">
+>     $ vncserver -list
+>     $ vncserver -kill :(screen number)
+>     </pre>
+> 14. Logout of VNC server to return to Hawk.
+>     <pre style="color: silver; background: black;">
+>     $ exit 
+>     </pre>
+{: .checklist}
 
 <img src="{{ page.root }}/fig/VNC-desktop.png" alt="VNC desktop" width="40%" height="40%" />
 
-
 {% include links.md %}
-
