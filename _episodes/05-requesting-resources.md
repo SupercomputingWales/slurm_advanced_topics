@@ -60,6 +60,7 @@ Sometimes is useful to request a node for an interactive session that allows you
 #SBATCH --ntasks-per-node=5
 #SBATCH -p c_compute_mdi1
 #SBATCH --time=00:05:00
+#SBATCH --reservation=training
 #SBATCH --account=scw1248
 
 # some commands specific to your job
@@ -218,6 +219,7 @@ As seen previously, SLURM defines several environment variables when we submit a
 #SBATCH --ntasks-per-node=5
 #SBATCH -p c_compute_mdi1
 #SBATCH --time=00:05:00
+#SBATCH --reservation=training
 #SBATCH --account=scw1148
 
 # some commands specific to your job

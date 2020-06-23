@@ -3,13 +3,18 @@ title: "Efficient job scripts"
 teaching: 0
 exercises: 0
 questions:
-- "TO BE ADDED"
+- "How can we parallelize multiple tasks with SLURM and GNU Parallel?"
+- "What is Quality of Service"
 objectives:
-- "First learning objective. (fixed)"
+- "Understand what are array jobs"
+- "Understand what are dependency jobs"
+- "Understand how to use GNU Parallel to run multiple tasks in parallel"
 keypoints:
-- "First key point. Brief Answer to questions. (fixed)"
+- "SLURM array jobs can be used to parallelize multiple tasks in a single script"
+- "GNU Parallel can be used similarly to array jobs but has additional features like resubmission capabilities"
+- "SLURM allow us to create jobs pipelines with its *--dependency* option"
+- "Hawk has a Quality of Service feature on partitions that sets limits to users on how many jobs can queued, run at the same time, maximum number of CPUs and nodes"
 ---
-This section introduces three 
 
 ## Job Arrays
 
@@ -23,7 +28,7 @@ SLURM and other job schedulers have a convenient feature known as *Job arrays* t
 #SBATCH --partition=c_compute_mdi1
 #SBATCH --ntasks=1
 #SBATCH --time=00:05:00
-#SBATCH --array=1-5
+#SBATCH --array=1-4
 #SBATCH --reservation=training
 #SBATCH --account=scw1148
 
@@ -35,12 +40,18 @@ module list
 
 env | grep SLURM
 
+sleep 30
+
 echo "This is task $SLURM_ARRAY_TASK_ID of $SLURM_ARRAY_TASK_COUNT"
 ./example.py ${SLURM_ARRAY_TASK_ID}
+
+OUTDIR=output_array
+mkdir -p $OUTDIR
+mv fig${SLURM_ARRAY_TASK_ID}.png $OUTDIR
 ~~~
 {: .language-bash}
 
-This script submits 5 independent jobs using 1 cpu each that will run for up to 5 minutes. The output and error filenames use new replacement patters *%A* (the job array's master allocation ID) and *%a* (job array index number) that allow us to uniquely idetify our jobs log files. Each of these jobs will perform exactly the same instructions (execute a python script *example.py*) but with a varying argument defined by our job task ID. Our python script is a simple program to create a statiscal distribution, plot it and save it as an image file using the job ID number as identifier.
+This script submits 4 independent jobs using 1 cpu each that will run for up to 5 minutes. Notice that  the output and error filenames use new replacement patters *%A* (the job array's master allocation ID) and *%a* (job array index number) that allow us to uniquely identify our jobs log files. Each of these jobs will perform exactly the same instructions (execute a python script *example.py*) but with a varying argument defined by our job task ID. Our python script is a simple program to create a probability distribution, plot it and save it as an image file using the job ID number as identifier. At the end, these image files are moved to a new output_array directory.
 
 > ## Running an array job...
 >
@@ -55,7 +66,7 @@ This script submits 5 independent jobs using 1 cpu each that will run for up to 
 
 
 ## GNU Parallel jobs
-`GNU parallel` is a shell tool that allows to run programs in parallel in one or more computers. It takes a list of items (files, lines, commands) and split them to be run in parallel. A feature of GNU parallel is that the output from the commands is the same as you would have get from running the commmands sequentially. Combined with `srun`, `GNU parallel` becomes a powerful method of distributing a large amount of jobs in a limited number or workers.
+`GNU parallel` is a shell tool that allows to run programs in parallel in one or more computers. It takes a list of items (files, lines, commands) and split them to be run in parallel. A feature of GNU parallel is that the output from the commands is the same as you would have get from running the commands sequentially. Combined with `srun`, `GNU parallel` becomes a powerful method of distributing a large amount of jobs in a limited number or workers.
 
 Might be easier to explain it with an example. Consider the following script:
 
@@ -74,6 +85,8 @@ module purge
 module load python
 module load parallel
 module list
+
+sleep 30
 
 # Define srun arguments:
 srun="srun -n1 -N1 --exclusive"
@@ -101,7 +114,7 @@ $parallel "$srun ./example.py {1}" ::: {1..4}
 ~~~
 {: .language-bash}
 
-This job script create only job that runs for up to 5 minutes with 4 cpus. Within the script we define two shortcut bash variables *parallel* and *srun* with instructions and arguments for `GNU parallel` and `srun`. The meaning of the different options is documented in the script. Put special attention to the argument {1..4} in *parallel*, this defines the set of arguments passed to our python script.
+This job script creates only one job that runs for up to 5 minutes with 4 CPUs. Within the script we define two shortcut bash variables *parallel* and *srun* with instructions and arguments for `GNU parallel` and `srun`. The meaning of the different options is documented in the script. Put special attention to the argument {1..4} in *parallel*, this defines the set of arguments passed to our python script.
 
 > ## Run a GNU parallel script (1)
 >
@@ -115,7 +128,7 @@ This job script create only job that runs for up to 5 minutes with 4 cpus. Withi
 
 > ## Job history
 >
-> `GNU parallel` keeps track of what jobs have been submitted in a joblog file. This alllows us to resubmit (*--resume* option) a job in case there was an interruption (error, time limit,etc). 
+> `GNU parallel` keeps track of what jobs have been submitted in a joblog file. This alllows us to resubmit (*--resume* option) a job in case there was an interruption (error, time limit, etc). 
 {: .callout}
 
 So far, it seems like we get the same output as we did with our array job script. So why bother with `GNU parallel` since it seems more complicated?
@@ -132,21 +145,64 @@ So far, it seems like we get the same output as we did with our array job script
 
 
 
-## Chain Jobs
-Another useful SLURM tool is the possibility of creating dependency jobs that allow us to build pipelines. 
+## Dependency jobs
+Another useful SLURM tool is the possibility of creating dependency jobs that allow us to build pipelines. The script below uses our previous scripts to submit an array job in a first instance and then a `GNU Parallel` job that will wait until the first job finishes.
+
+In this example, our jobs are independent of each other, but provide with a template useful in several cases where a job rely on the output produce by another job, and while the jobs could be in principle combined in a single script, it is very often the case that the jobs have different requirements (CPUs, memory, GPUs, etc) one might be a heavy MPI job using several nodes, while the second could be an array job processing the output from the first, in this case it might be more efficient submitting the jobs independently as a pipeline.
 
 
-Building pipelines using slurm dependencies
+~~~
+#!/bin/bash
+first=$(sbatch array_job.q | cut -d' ' -f4)
+echo "submitted first job with id $first"
+second=$(sbatch --dependency=afterok:$first --account=scw1148 gnu_parallel_job.q | cut -d' ' -f4)
+echo "submitted second job with id $second"
+#
+# Potentially more jobs...
+# third=$(sbatch --dependency=afterok:$second --account=scw1148 some-other-job.q | cut -d' ' -f4)
+#
+~~~
+{: .language-bash}
 
-Useful to create dependencies between jobs. 
-For example, if a job relies on the result of one or more preceding jobs. 
-Can also be used if the runtime limit of the batch queues is not sufficient for your job.
-Use SLURM option -d or "--dependency" to specify that a job is only allowed to start if another job finished. 
+
+In the above script, we use SLURM option -d or "--dependency" to specify that a job is only allowed to start if another job finished. Some of the possible values that this option accepts are:
+
+<table>
+ <tr>
+  <th>Value</th>
+  <th>Description</th>
+ </tr>
+ <tr>
+  <td>after</td>
+  <td>Begin execution after all jobs specified have finished or have been cancelled.</td>
+ </tr>
+ <tr>
+  <td>afterany</td>
+  <td>This job can begin execution after the specified jobs have terminated.</td>
+ </tr>
+ <tr>
+  <td>afternotok</td>
+  <td>This job can begin execution after the specified jobs have terminated in some failed state.</td>
+ </tr>
+ <tr>
+  <td>afterok</td>
+  <td>This job can begin execution after the specified jobs have successfully executed </td>
+ </tr>
+</table> 
+
+> ## Running a dependency job...
+>
+> Go ahead and try running
+> <pre style="color: silver; background: black;">
+> ./submit_dependency_job.sh
+> </pre>
+> Does it work? Try changing *afterok* to *afternotok*, what is the effect?
+{: .challenge}
 
 ## Quality of Service
-On Hawk, partitions have an associated *Quality of Service* (QoS) feature that assignes a set of limits to try to keep things fair for everyone. This defines the maximum number of queued and running jobs a user can have and the maximum number of nodes and cpus that can be requested at the same time.
+On Hawk, partitions have an associated *Quality of Service* (QoS) feature that assigns a set of limits to try to keep things fair for everyone. This defines the maximum number of queued and running jobs a user can have and the maximum number of nodes and CPUs that can be requested at the same time.
 
-For example, on *htc* users can queue up to 40 jobs and run 10 at the same time and cannot request more that 10 nodes or 400 cpus at the same time.
+For example, on *htc* users can queue up to 40 jobs and run 10 at the same time and cannot request more that 10 nodes or 400 CPUs at the same time.
 
 If you submit more than 10 jobs to *htc*, some of them will have the following message *QOSMaxJobsPerUserLimit*
 
