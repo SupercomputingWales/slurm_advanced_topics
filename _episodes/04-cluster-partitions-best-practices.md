@@ -159,11 +159,11 @@ On scratch, new users are allocated a default quota of 5 Tb and 3M files. The ma
 >
 > Try running this command in your home directory:
 > 
-> <pre style="color: silver; background: black;">[new_user@cl1 ~]$ du -h --maxdepth=1  </pre>
+> <pre style="color: silver; background: black;">[new_user@cl1 ~]$ du -h --max-depth=1  </pre>
 > 
 > What does it shows you? Now try this command?
 >
-> <pre style="color: silver; background: black;">[new_user@cl1 ~]$ du --inode --maxdepth=1  </pre>
+> <pre style="color: silver; background: black;">[new_user@cl1 ~]$ du --inodes --max-depth=1  </pre>
 >
 > What is it showing you now? Is it useful?
 >
