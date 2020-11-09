@@ -1,7 +1,7 @@
 ---
 title: "Capture errors in shell scripts"
-teaching: 0
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
 - "How the shell helps to keep you safe?"
 objectives:

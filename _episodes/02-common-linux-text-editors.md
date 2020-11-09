@@ -1,7 +1,7 @@
 ---
 title: "Common Linux CLI Text Editors"
-teaching: 0
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
 - "What are some of the most common Linux text editors"
 objectives:

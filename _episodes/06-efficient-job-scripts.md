@@ -1,7 +1,7 @@
 ---
 title: "Efficient job scripts"
-teaching: 0
-exercises: 0
+teaching: 15
+exercises: 15
 questions:
 - "How can we parallelize multiple tasks with SLURM and GNU Parallel?"
 - "What is Quality of Service"

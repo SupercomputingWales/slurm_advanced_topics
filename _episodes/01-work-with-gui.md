@@ -1,7 +1,7 @@
 ---
 title: "Work with Graphical User Interfaces (GUIs)"
-teaching: 0
-exercises: 0
+teaching: 15
+exercises: 15
 questions:
 - "What is X11?"
 - "How to connect to Hawk using a GUI?"
@@ -87,6 +87,9 @@ VNC is a Virtual Network Computing desktop-sharing system that allows to remotel
  - With VNC your application survives disconnecting from the server. For example, if you need to close your laptop and change location, you can reconnect to the VNC server and continue working with the application. This is not possible with X11, since when the X11 server dies, the windows disappear.
 
 We have recently setup a VNC server on Hawk to address these issues. To connect to the server you need to 1) create a session in the server and 2) connect via SSH tunnelling with a VNC client. 
+
+For users who do not need long-running VNC servers and happy for sessions to reset between disconnects then there is a
+general purpose VNC service on port *5901* which allows you to login to a remote desktop.
 
 > ## Create a VNC session
 >

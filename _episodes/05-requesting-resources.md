@@ -1,7 +1,7 @@
 ---
 title: "Requesting resources"
-teaching: 0
-exercises: 0
+teaching: 15
+exercises: 15
 questions:
 - "How to use SLURM environment variables?"
 - "How to obtain information about jobs and partitions?"

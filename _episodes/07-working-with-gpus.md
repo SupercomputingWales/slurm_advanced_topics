@@ -1,7 +1,7 @@
 ---
 title: "Working with GPUs"
-teaching: 0
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
 - "What type of GPU devices are available on SCW systems?"
 - "How to modify a job script to request GPUs?"

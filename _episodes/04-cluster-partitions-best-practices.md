@@ -1,7 +1,7 @@
 ---
 title: "Best practices"
-teaching: 0
-exercises: 0
+teaching: 15
+exercises: 15
 questions:
 - "Dos, don'ts and general advice"
 objectives:
