@@ -3,11 +3,19 @@ title: Setup
 ---
 Access to the system is necessary to undertake this course. It is assumed that attendees have a user account or have received a guest training account.
 
-Some exercises are used in this course and are located in the login node cl1 in /tmp/slurm_adv_topics_exercises.tar.gz. To copy and extract this file:
+Please follow the instructions below to obtain some example scripts:
 
-<pre style="color: silver; background: black;">
-user@cl1: ~:$ cp /tmp/arc_2020_slurm_adv_topics.tar.gz /home/$USER
-user@cl1: ~:$ tar -xzvf arc_2020_slurm_adv_topics.tar.gz </pre>
+1. Download [arc_slurm_adv_topics.zip][zip-file] and extract somewhere on Hawk. 
+2. Extract the zip file and check the extracted directory
+
+For example:
+
+~~~
+$ wget {{ site.url }}{{ site.baseurl }}/data/arc_slurm_adv_topics.zip
+$ unzip arc_slurm_adv_topics.zip
+$ ls arc_slurm_adv_topics
+~~~
+{: .language-bash}
 
 A node reservation is created in partition c_compute_mdi1. To access it users need to specify in their job scripts:
 ~~~
@@ -15,5 +23,7 @@ A node reservation is created in partition c_compute_mdi1. To access it users ne
 #SBATCH --account=scw1148
 ~~~
 {: .language-bash}
+
+[zip-file]: {{ page.root }}/data/arc_slurm_adv_topics.zip
 
 {% include links.md %}
