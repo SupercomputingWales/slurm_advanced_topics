@@ -43,6 +43,17 @@ INFO: Password to access site is: RshEFvNoiPEK4
 An optional argument can be given to `rstudio-server` to override the default port number. If multiple `rstudio-server`
 processes are run on the same node the ports would only work for one process.
 
+Next, open a new terminal and create an ssh tunnel using the node and port obtained in the previous step (e.g. ccs2011:8787):
+~~~
+$ ssh -L8787:ccs2011:8787 hawk-username@hawklogin.cf.ac.uk
+~~~
+{: .language-bash}
+
+You should be able to login to Hawk as usual but additioanly you should be able to navigate to http://localhost:8787 in your web browser. If everything went well you should see something like:
+<img src="{{ page.root }}/fig/Rstudio-login.png" alt="Rstudio login" width="50%" height="50%" />
+
+Where you should use your Hawk username and the password obtained before (e.g. RshEFvNoiPEK4)
+
 # Jupyter
 
 [Jupyter](https://jupyter.org/) is a common Python web tool to aid in development.
