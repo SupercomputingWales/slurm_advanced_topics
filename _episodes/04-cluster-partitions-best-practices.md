@@ -40,7 +40,7 @@ Linux allows you to configure your work environment in detail. This is done by r
 > - Estimate the time and resources that your job needs. This will reduce the time necessary to grant resources.
 > - Try to avoid submitting a massive number of small jobs since this creates an overhead in resource provision. Whenever possible, stack small jobs in single bigger jobs.
 > - Avoid creating thousands of small files. This has a negative impact on the global filesystem. Better to have a smaller number or larger files.
-> Run a small test case (dev partition) before submitting a large job, to make sure it works as expected.
+> - Run a small test case (dev partition) before submitting a large job, to make sure it works as expected.
 > - Use *--exclusive*, only if you are certain that you require the resources (cpus, memory) of a full node.
     * Disadvantages: takes longer for your job to be allocated resources, potentially inefficient if you are using less cpus/memory than provided.
 > - Use checkpoints if your application allows it. This will let you restart your job from the last successful state rather that rerunning from the beginning.
@@ -71,7 +71,8 @@ dev            up    1:00:00      2   idle ccs[0135-0136]
 </pre>
 
 
-In the output above the user has access to several partitions and should submit jobs depending on the application requirements since each partition is ideally designed for different kind of jobs.
+In the output above the user has access to several partitions and should submit jobs depending on the application requirements
+since each partition is ideally designed for different kind of jobs.
 
 <table style="width:100%">
  <tr>
@@ -92,7 +93,7 @@ In the output above the user has access to several partitions and should submit 
  <tr>
   <td> highmem </td>
   <td> Large memory (384GB) jobs </td>
-  <td> Jobs with low low/standard memory requirements </td>
+  <td> Jobs with low or standard memory requirements </td>
  </tr>
  <tr>
   <td> gpu </td>
@@ -174,7 +175,8 @@ On scratch, new users are allocated a default quota of 5 Tb and 3M files. The ma
 >
 > Please note that although we try to keep your data as safe as possible, at the moment **we do not offer backups**. So please make sure to have a backup of critical files and transfer important data to a more permanent storage.
 >
-> Did you know that Cardiff University offer a **Research Data Store**, and Cardiff researchers could apply for 1Tb of storage (more depending on certain)? Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
+> Did you know that Cardiff University offer a **Research Data Store**? Cardiff researchers can apply for 1Tb of storage (more 
+storage can be provided depending on certain criterria). Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
 {: .callout}
 
 {% include links.md %}
