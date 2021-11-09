@@ -13,10 +13,15 @@ keypoints:
 - "Check your quota regularly"
 - "Submit jobs to appropriate partitions"
 ---
-This section introduces best practices when working on SCW systems.
+This section introduces best practices when working on SCW systems. You can find more
+information in the [SCW portal](https://portal.supercomputing.wales/index.php/best-practice/).
 
 ## Login nodes
-**Do NOT run long jobs in the login nodes**. Remember that login nodes (cl1, cl2, cla1) are shared nodes used by all users. Short testing, compilation, file transfer, light debugging are typically ok. Large MPI jobs are definitely not. If we detect heavy jobs running on the system the application will be terminated without notice.
+
+**Do NOT run long jobs in the login nodes**. Remember that login nodes (cl1, cl2,
+cla1) are shared nodes used by all users. Short testing, compilation, file transfer, 
+light debugging are typically ok. Large MPI jobs are definitely not. If we detect 
+heavy jobs running on the system the application will be terminated without notice.
 
 > ## Who is at home?
 > To help you realize the shared nature of the login nodes, try running this command:
@@ -26,28 +31,68 @@ This section introduces best practices when working on SCW systems.
 > What is this showing you?
 {: .challenge}
 
+> ## Consequences of breaking the rules
+>
+> <img src="{{ page.root }}/fig/judge.jpg" alt="The Judge" width="250px"/>
+>
+> By default each user is limited to the concurrent use of at most 8 processor cores
+> and 200GB of memory. However, should **heavy usage** (defined as more than 75% of 
+> the allocation for continuous time 3 minutes) be made of this allocation then the
+> user’s access will be reduced for a penalty period of time. There are three penalty
+> levels that are reached if the user mantains the offending behaviour. The user’s 
+> access reduced by a fraction of the default quota by a defined period of time, both
+> increase as the user moves through penalty levels. You can find more details in the
+> [SCW portal](https://portal.supercomputing.wales/index.php/best-practice/).
+>
+> The user will receive an email notification if a *violation of the usage policy* 
+> has happened providing details about the offending application and current penalty
+> level.
+>
+> If you are not sure about why you are receiving this notifications or need further 
+> help do not hesitate to contact us.
+>
+>
+{: .callout}
+
 ## Your .bashrc
-Linux allows you to configure your work environment in detail. This is done by reading text files on login. Typically a user would edit *.bashrc* to finetune module loading, adding directories to *PATH*, etc. This is ok in personal systems but on SCW *.bashrc* is managed centrally. What this means is that in principle you can edit *.bashrc* but your changes might get lost without warning in case there is a need to reset this file. In turn we encourage users to edit *.myenv* which is also read on login and should have the same effect as editing *.bashrc*
+Linux allows you to configure your work environment in detail. This is done by 
+reading text files on login. Typically a user would edit *.bashrc* to finetune module
+loading, adding directories to *PATH*, etc. This is ok in personal systems but on SCW
+*.bashrc* is managed centrally. What this means is that in principle you can edit 
+*.bashrc* but your changes might get lost without warning in case there is a need to 
+reset this file. In turn we encourage users to edit *.myenv* which is also read on 
+login and should have the same effect as editing *.bashrc*.
 
 > ## My application insist on editing *.bashrc*
 >
-> Some applications include instructions on how to add changes to *.bashrc*. If this is your case, try doing the changes on *.myenv*, if this doesn't work please get in contact with us and we will help you find the best solution.
+> Some applications include instructions on how to add changes to *.bashrc*. If this
+> is your case, try doing the changes on *.myenv*, if this doesn't work please get 
+> in contact with us and we will help you find the best solution.
 {: .callout}
 
 ## Running jobs
+
 > ## Whenever possible:
 >
-> - Estimate the time and resources that your job needs. This will reduce the time necessary to grant resources.
-> - Try to avoid submitting a massive number of small jobs since this creates an overhead in resource provision. Whenever possible, stack small jobs in single bigger jobs.
-> - Avoid creating thousands of small files. This has a negative impact on the global filesystem. Better to have a smaller number or larger files.
-> - Run a small test case (dev partition) before submitting a large job, to make sure it works as expected.
-> - Use *--exclusive*, only if you are certain that you require the resources (cpus, memory) of a full node.
-    * Disadvantages: takes longer for your job to be allocated resources, potentially inefficient if you are using less cpus/memory than provided.
-> - Use checkpoints if your application allows it. This will let you restart your job from the last successful state rather that rerunning from the beginning.
->
+> - Estimate the time and resources that your job needs. This will reduce the time
+>   necessary to grant resources.
+> - Try to avoid submitting a massive number of small jobs since this creates an 
+>   overhead in resource provision. Whenever possible, stack small jobs in single 
+>   bigger jobs.
+> - Avoid creating thousands of small files. This has a negative impact on the global
+>   filesystem. Better to have a smaller number or larger files.
+> - Run a small test case (dev partition) before submitting a large job, to make sure
+>   it works as expected.
+> - Use *--exclusive*, only if you are certain that you require the resources (cpus, 
+>   memory) of a full node.
+>   * Disadvantages: takes longer for your job to be allocated resources, potentially
+>     inefficient if you are using less cpus/memory than provided.
+> - Use checkpoints if your application allows it. This will let you restart your job
+>   from the last successful state rather that rerunning from the beginning.
 {: .checklist}
 
 ## Partitions
+
 Partitions in the context of SCW systems refer to groups of nodes with certain capabilities/features in common. You can list the partitions available to you with the following command:
 
 <pre style="color: silver; background: black;">$ sinfo
@@ -70,9 +115,9 @@ htc            up 3-00:00:00     43  alloc ccs[1010-1013,1015-1022,1024,1026,200
 dev            up    1:00:00      2   idle ccs[0135-0136]
 </pre>
 
-
-In the output above the user has access to several partitions and should submit jobs depending on the application requirements
-since each partition is ideally designed for different kind of jobs.
+In the output above the user has access to several partitions and should submit jobs 
+depending on the application requirements since each partition is ideally designed
+for different kind of jobs.
 
 <table style="width:100%">
  <tr>
@@ -119,20 +164,34 @@ since each partition is ideally designed for different kind of jobs.
 
 > ## Testing your script
 >
-> Notice the *dev* entry in the *sinfo* output above? This is the development partition and is meant to perform short application tests. Runtime is limited to 1 h and you can use up to 2 nodes. This is typically enough to test most parallel applications. Please avoid submitting production jobs to this queue since this impact negatively on users looking to quickly test their applications.
+> Notice the *dev* entry in the *sinfo* output above? This is the development 
+> partition and is meant to perform short application tests. Runtime is limited to 
+> 1 h and you can use up to 2 nodes. This is typically enough to test most parallel 
+> applications. Please avoid submitting production jobs to this queue since this 
+> impact negatively on users looking to quickly test their applications.
 >
 {: .callout}
 
 ## Scratch
 
-If your compute jobs on the cluster produce intermediate results, using your scratch directory can be beneficial:
-- The scratch filesystem has a faster I/O speed than home.
-- It has a higher default quota (5 Tb) so you can store bigger input files if necessary. 
+If your compute jobs on the cluster produce intermediate results, using your scratch
+directory can be beneficial:
 
-Remember to instruct your scripts to clean after themselves by removing unnecessary data, this prevents filling up your quota. Remember that unused files on scratch might be removed without previous notice. 
+- The scratch filesystem has a faster I/O speed than home.
+- It has a higher default quota (5 Tb) so you can store bigger input files if 
+  necessary. 
+
+Remember to instruct your scripts to clean after themselves by removing unnecessary 
+data, this prevents filling up your quota. Remember that unused files on scratch 
+might be removed without previous notice. 
 
 ## Your quota
-On SCW systems there are two types of quotas: storage and files. Storage quota is measured in bytes (kb, Mb, Tb) while file quota is measured in individual files (independent of their size). You can check your current quota with the command **myquota**:
+
+On SCW systems there are two types of quotas: storage and files. Storage quota is 
+measured in bytes (kb, Mb, Tb) while file quota is measured in individual files 
+(independent of their size). You can check your current quota with the command 
+**myquota**:
+
 <pre style="color: silver; background: black;">[new_user@cl1 ~]$ myquota
 HOME DIRECTORY c.medib
      Filesystem   space   quota   limit   grace   files   quota   limit   grace
@@ -145,18 +204,32 @@ SCRATCH DIRECTORY c.medib
 
  </pre>
 
-On account approval all users are allocated a default home quota of 50 Gb and 100 K files. In the example above, the user has 32 Kb of data currently on home, if the user were to go beyond 51200 Mb, it would enter a grace period of 6 days to reduce the storage footprint. After this grace period or if hitting 53248 Mb, the user wouldn't be able to create any more files. Something similar applies to file quota.
+On account approval all users are allocated a default home quota of 50 Gb and 100 K 
+files. In the example above, the user has 32 Kb of data currently on home, if the 
+user were to go beyond 51200 Mb, it would enter a grace period of 6 days to reduce 
+the storage footprint. After this grace period or if hitting 53248 Mb, the user 
+wouldn't be able to create any more files. Something similar applies to file quota.
 
-On scratch, new users are allocated a default quota of 5 Tb and 3M files. The main difference with home quota is that in scratch there is no grace period (that is what the *0* under quota tries to signify) but for all intents and purposes behaves in the same manner as home.
+On scratch, new users are allocated a default quota of 5 Tb and 3M files. The main 
+difference with home quota is that in scratch there is no grace period (that is what 
+the *0* under quota tries to signify) but for all intents and purposes behaves in the
+same manner as home.
 
 > ## My application used to work ...
 > 
-> As you can imagine, several errors arise from programs not being able to create files and the error messages quite often are unrelated to this fact. A common case is an application that used to work perfectly well and suddenly throws an error even if running the same job. As a first step in troubleshooting, it is worth checking that your quota hasn't being reached. 
+> As you can imagine, several errors arise from programs not being able to create 
+> files and the error messages quite often are unrelated to this fact. A common case
+> is an application that used to work perfectly well and suddenly throws an error 
+> even if running the same job. As a first step in troubleshooting, it is worth 
+> checking that your quota hasn't being reached. 
+>
 {: .callout}
 
 > ## Checking your usage
 > 
-> If you are worried about hitting your quota, and want to do some clean-up but are wondering which might be the problematic directories, Linux has an utility that can help you. 
+> If you are worried about hitting your quota, and want to do some clean-up but are
+> wondering which might be the problematic directories, Linux has an utility that can
+> help you. 
 >
 > Try running this command in your home directory:
 > 
@@ -173,11 +246,14 @@ On scratch, new users are allocated a default quota of 5 Tb and 3M files. The ma
 
 > ## Backups
 >
-> Please note that although we try to keep your data as safe as possible, at the moment **we do not offer backups**. So please make sure to have a backup of critical files and transfer important data to a more permanent storage.
+> Please note that although we try to keep your data as safe as possible, at the 
+> moment **we do not offer backups**. So please make sure to have a backup of 
+> critical files and transfer important data to a more permanent storage.
 >
-> Did you know that Cardiff University offer a **Research Data Store**? Cardiff researchers can apply for 1Tb of storage (more 
-storage can be provided depending on certain criterria). Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
+> Did you know that Cardiff University offer a **Research Data Store**? Cardiff 
+> researchers can apply for 1Tb of storage (more storage can be provided depending on
+> certain criteria). Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
+>
 {: .callout}
 
 {% include links.md %}
-
