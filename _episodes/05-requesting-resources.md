@@ -108,7 +108,7 @@ The table below show some common `sbatch` commands (also shared with `srun` exce
  <tr>
   <td>--partition=</td>
   <td>-p</td>
-  <td>Request a specific partition for resource allocation</td>
+  <td>Request a specific partition (or partitions) for resource allocation</td>
  </tr>
  <tr>
   <td>--time=</td>
@@ -161,6 +161,14 @@ The table below show some common `sbatch` commands (also shared with `srun` exce
   <td></td>
  </tr>
 </table>
+
+> ## Partition selection
+> 
+> Partition selection usually takes one option, e.g. `#SBATCH --partition=gpu` but it can also take multiple
+> values such as accessing all the GPU partitions, `#SBATCH --partition=gpu,gpu_v100`, where if you do not care
+> which type of GPU to use (P100 vs V100) then it will find the next available GPU node.  This can also be used with
+> dedicated researcher partitions such as `c_gpu_comsc1` to use either your dedicated partitions or the shared partitions.
+{: .callout}
 
 > ## Submitting a job script (1)
 >
