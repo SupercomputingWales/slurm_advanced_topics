@@ -80,18 +80,28 @@ $ Python 3.7.0
 
 ## Installing a package
 
-To install a package we recommend using the `pip` functionality.  This provides many packages of Python and handles
-dependencies between the packages.  For a user on Hawk, this can be run as
+To install a package we recommend using the `pip` functionality with a virtual environment. Using the previously recommdended `--user` option can cause problems due to not being isolated and conflict with other packages.  Pip provides many packages of Python and handles
+dependencies between the packages.  For a user on Hawk it may require 2 steps.
 
+To create a virtual environment and update Pip run:
 ~~~
-$ pip3 install --user <package>
+$ python3 -m venv my_env
+$ ./my_env/bin/activate
+$ pip install --upgrade pip
+~~~
+
+Then install a package with:
+~~~
+$ pip install <package>
 ~~~
 {: .language-bash}
 
 > ## Pip versions
 >
-> Pip (just like Python) also is versioned with `pip` just being some OS default.  Whilst `pip3` will call the Python 3
-> version of Pip.  This is important to match overwise it will install packages in the wrong location.  What versions
+> Pip (just like Python) also is versioned with `pip` just being a default version in the OS or virtual environment.  Whilst `pip3` will call the Python 3
+> version of Pip.  This is important to match overwise it will install packages in the wrong location.  
+> Also to add another option Python3 comes with pip as a module so `python3 -m pip` can also be a valid way and is now 
+> recommended as the future way to call pip.  What versions
 > are available on Hawk?
 > > ## Solution
 > > 
@@ -115,14 +125,13 @@ $ pip3 install --user <package>
 Where `<package>` is the name of the package.  The packages can be found using the Python Package Index or
 [PyPI](https://pypi.org).
 
-The main concept for the user is to use `--user` that places the package in `$HOME` in this case in `$HOME/.local/lib/python3.7/site-packages`.  This is automatically in the searchpath for Python when importing the module.
 
 ### Example
 
-To install a rather unhelpful `hello-world` package, run
+To install a rather unhelpful `hello-world` package into a virtual environment, activate your virtual environment and run
 
 ~~~
-$ pip3 install --user pip-hello-world
+$ pip install pip-hello-world
 ~~~
 {: .language-bash}
 
@@ -144,7 +153,7 @@ The script will produce
 ~~~
 {: .output}
 
-> ## Virtual environments
+> ## Virtual environments in detail
 >
 > Python supports a concept called virtual environments.  These are self-contained Python environments that allows you
 > to install packages without impacting other environments you may have.  For example:
