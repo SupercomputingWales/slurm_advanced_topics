@@ -83,7 +83,7 @@ $ Python 3.7.0
 To install a package we recommend using the `pip` functionality with a virtual environment. Using the previously recommdended `--user` option can cause problems due to not being isolated and conflict with other packages.  Pip provides many packages of Python and handles
 dependencies between the packages.  For a user on Hawk it may require 2 steps.
 
-To create a virtual environment and update Pip run:
+To create a virtual environment and update Pip (updating Pip resolves odd behaviour especially when detecting available platform downloads) run:
 ~~~
 $ python3 -m venv my_env
 $ ./my_env/bin/activate
