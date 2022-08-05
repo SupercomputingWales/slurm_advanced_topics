@@ -207,6 +207,7 @@ Since Anaconda keeps updating we can load the module on Hawk with
 
 ~~~
 $ module load anaconda
+$ source activate
 ~~~
 {: .language-bash}
 
@@ -230,7 +231,6 @@ This package can then be activated using
 
 ~~~
 $ conda info --envs
-$ . /apps/languages/anaconda3/etc/profile.d/conda.sh
 $ conda activate snowflakes
 $ python
 $ source deactivate
