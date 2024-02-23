@@ -16,16 +16,23 @@ keypoints:
 - "SLURM has several commands to help you interact with jobs and partitions"
 ---
 ## Aberystwyth Users
-For this section make sure to use your partition is *compute*, account is *scw2196* and reservation is *scw2196_201* (monday) or *scw2196_201* (tuesday).
+For this section make sure to use your partition is *compute*, account is *scw2196* and
+reservation is *scw2196_201* (monday) or *scw2196_201* (tuesday).
+
 ## How to request resources
-Setting the correct resource requirements will help to ensure a faster turnaround time on the supercomputer. For this, users need to interact with SLURM, the supercomputer's job scheduler, that is in charge of allocating resources to jobs from all users.
+Setting the correct resource requirements will help to ensure a faster turnaround time on the
+supercomputer. For this, users need to interact with SLURM, the supercomputer's job scheduler,
+that is in charge of allocating resources to jobs from all users.
 
 There are two ways to request resources:
 - Interactive access
 - Prepare and submit a job script
 
 ### Interactive jobs
-Sometimes is useful to request a node for an interactive session that allows you to use it as if you would be in a login node. The `srun` command allows you to do this, it will add your resource request to the queue and once allocated it will start a new bash session on the granted nodes.
+Sometimes is useful to request a node for an interactive session that allows you to use it as if
+you would be in a login node. The `srun` command allows you to do this, it will add your resource
+request to the queue and once allocated it will start a new bash session on the granted nodes.
+
 > ## Requesting an interactive job (1)
 > Try the following command
 >
@@ -33,24 +40,37 @@ Sometimes is useful to request a node for an interactive session that allows you
 > <pre style="color: silver; background: black;">$ srun -n 1 -p c_compute_mdi1 --account=scw1148 --reservation=training --pty bash </pre>
 >
 > Sunbird:
-> <pre style="color: silver; background: black;">$ srun -n 1 -p c_compute --account=scw2196 --reservation=scwXXXX --pty bash </pre>
-> What happened? Since the command is using a special reservation for this training session, the time to allocate resources should have been small and you should have been taken to a new node (from cl1 to ccs0076, for example). Once inside the work node, you can run your applications as if you were in the login node but without the restrictions. 
+> <pre style="color: silver; background: black;">$ srun -n 1 -p compute --account=scw2196 --reservation=scwXXXX --pty bash </pre>
+>
+> What happened? Since the command is using a special reservation for this training session,
+> the time to allocate resources should have been small and you should have been taken to a
+> new node (from cl1 to ccs0076, for example). Once inside the work node, you can run your
+> applications as if you were in the login node but without the restrictions. 
 > While we are here try this command and put attention to the output:
 > <pre style="color: silver; background: black;">$ env | grep SLURM  </pre>
 >
-> This should show you all the environment variables that match "SLURM". These are automatically set based on the resources requested. How many cpus are you using? What is the directory where you executed the command? How would this output change if you use *-n 2* when running `srun`?
+> This should show you all the environment variables that match "SLURM". These are automatically
+> set based on the resources requested. How many cpus are you using? What is the directory where
+> you executed the command? How would this output change if you use *-n 2* when running `srun`?
 >
 > To exit the node type *exit*.
 >
+> **Please note, do not use the above --reservation option for your regular jobs, this only
+> works during this training session. You also will also need to change scw1148 or scw2196 to
+> your own project code**
 {: .challenge}
 
 > ## Requesting an interactive job (2)
 > Now, try the following command:
 > <pre style="color: silver; background: black;">$ srun -n 1 -p compute --account=scwXXXX --pty bash </pre>
 >
-> Don't forget to replace **scwXXXX** with your own scw project code. What did you notice? If you were lucky, you might have landed in a new node as in the previous case, most likely you received a message like:
-> <pre style="color: silver; background: black;">$ job 16717287 queued and waiting for resources </pre>
-> which indicates that your request has been put in the queue and you can sit and wait for it to be allocated. Since we don't want to do that right now, go ahead and press <kbd>Ctrl</kbd>+<kbd>C</kbd> to cancel the request.
+> Don't forget to replace **scwXXXX** with your own scw project code. What did you notice? If
+> you were lucky, you might have landed in a new node as in the previous case, most likely you
+> received a message like:
+> <pre style="color: silver; background: black;">$ job 12345678 queued and waiting for resources </pre>
+> which indicates that your request has been put in the queue and you can sit and wait for it
+> to be allocated. Since we don't want to do that right now, go ahead and press
+> <kbd>Ctrl</kbd>+<kbd>C</kbd> to cancel the request.
 {: .challenge}
 
 
@@ -59,14 +79,12 @@ Sometimes is useful to request a node for an interactive session that allows you
 ~~~
 #!/bin/bash --login
 #SBATCH -J my.job
-#SBATCH -o %x.o.%J
-#SBATCH -e %x.e.%J
+#SBATCH -o %x.o.%j
+#SBATCH -e %x.e.%j
 #SBATCH --ntasks=5
 #SBATCH --ntasks-per-node=5
-#SBATCH -p c_compute_mdi1
+#SBATCH -p dev
 #SBATCH --time=00:05:00
-#SBATCH --reservation=training
-#SBATCH --account=scw1248
 
 # some commands specific to your job
 # for example:
@@ -76,7 +94,11 @@ echo “Hello World!”
 ~~~
 {: .language-bash}
 
-In the above Bash script pay attention to the *#SBATCH* entries, these are calls to `sbatch`, the program in charge to submit batch jobs to SLURM. This is where users specify how much resource to request. In this example the script is requesting: 5 tasks, 5 tasks to be run in each node (hence only 1 node), resources to be granted in the *c_compute_mdi1* partition and maximum runtime of 5 minutes. 
+In the above Bash script pay attention to the *#SBATCH* entries, these are calls to `sbatch`,
+the program in charge to submit batch jobs to SLURM. This is where users specify how much
+resource to request. In this example the script is requesting: 5 tasks, 5 tasks to be run in
+each node (hence only 1 node), resources to be granted in the *dev* partition and maximum
+runtime of 5 minutes. 
 
 The table below show some common `sbatch` commands (also shared with `srun` except for *--array*):
 <table style="width:100%">
@@ -169,10 +191,12 @@ The table below show some common `sbatch` commands (also shared with `srun` exce
 
 > ## Partition selection
 > 
-> Partition selection usually takes one option, e.g. `#SBATCH --partition=gpu` but it can also take multiple
-> values such as accessing all the GPU partitions, `#SBATCH --partition=gpu,gpu_v100`, where if you do not care
-> which type of GPU to use (P100 vs V100) then it will find the next available GPU node.  This can also be used with
-> dedicated researcher partitions such as `c_gpu_comsc1` to use either your dedicated partitions or the shared partitions.
+> Partition selection usually takes one option, e.g. `#SBATCH --partition=gpu` but it can also
+> take multiple values such as accessing all the GPU partitions,
+> `#SBATCH --partition=gpu,gpu_v100`, where if you do not care which type of GPU to use (P100
+> vs V100) then it will find the next available GPU node. This can also be used with dedicated
+> researcher partitions such as `c_gpu_comsc1` to use either your dedicated partitions or the
+> shared partitions.
 {: .callout}
 
 > ## Submitting a job script (1)
@@ -190,7 +214,8 @@ Did you notice the *%x* and *%J* in the previous batch script?
 ~~~
 {: .language-bash}
 
-These are replacement symbols that help you tag your output scripts. Some of the symbols available include:
+These are replacement symbols that help you tag your output scripts. Some of the symbols
+available include:
 <table style="width=100%">
  <tr>
   <th>Symbol</th>
@@ -218,22 +243,24 @@ These are replacement symbols that help you tag your output scripts. Some of the
  </tr>
 </table>
 
-In our simple example script this has the effect of uniquely tagging the output and error files as (for example) *my.job.o.16717342* and *my.job.e.16717342* avoiding rewriting the file in case we were to submit the same job without saving our logs.
+In our simple example script this has the effect of uniquely tagging the output and error files
+as (for example) *my.job.o.16717342* and *my.job.e.16717342* avoiding rewriting the file in case
+we were to submit the same job without saving our logs.
 
 ## Environment variables
-As seen previously, SLURM defines several environment variables when we submit a job. These can be used within a job to tag files, directories, make decisions based on resources available and more. The following script shows how to query these variables:
+As seen previously, SLURM defines several environment variables when we submit a job. These can
+be used within a job to tag files, directories, make decisions based on resources available and
+more. The following script shows how to query these variables:
 
 ~~~
 #!/bin/bash --login
 #SBATCH -J my.job
-#SBATCH -o %x.o.%J
-#SBATCH -e %x.e.%J
+#SBATCH -o %x.o.%j
+#SBATCH -e %x.e.%j
 #SBATCH --ntasks=5
 #SBATCH --ntasks-per-node=5
-#SBATCH -p c_compute_mdi1
+#SBATCH -p dev
 #SBATCH --time=00:05:00
-#SBATCH --reservation=training
-#SBATCH --account=scw1148
 
 # some commands specific to your job
 # for example:
@@ -264,11 +291,13 @@ echo Number of cpus: $SLURM_NPROCS >> ${OUTFILE}
 >
 > Try submitting lesson_6/job_script_2.sh.
 > <pre style="color: silver; background: black;">$ sbatch job_script_2.sh </pre>
-> How are we tagging our work directory? Would it be useful to prevent deleting any output files created within this directory when running the script again? 
+> How are we tagging our work directory? Would it be useful to prevent deleting any output
+> files created within this directory when running the script again? 
 {: .challenge}
 
 ## Managing jobs
-SLURM has several commands to help you interact with the cluster partitions and with your running jobs. Some of these are:
+SLURM has several commands to help you interact with the cluster partitions and with your
+running jobs. Some of these are:
 <table>
  <tr>
   <th>Command</th>
@@ -304,16 +333,21 @@ SLURM has several commands to help you interact with the cluster partitions and 
 
 > ## Looking for free nodes?
 >
-> `sinfo` gives us information about the cluster partitions. We can parse its output to look for *idle* nodes:
+> `sinfo` gives us information about the cluster partitions. We can parse its output to look
+> for *idle* nodes:
 > <pre style="color: silver; background: black;">$ sinfo | grep idle </pre>
-> And with a bit of luck we will find some. Would this information be useful if trying to submit an interactive job?
+> And with a bit of luck we will find some. Would this information be useful if trying to submit
+> an interactive job?
 {: .challenge}
 
 > ## When is my job going to start?
 >
-> You can use `scontrol` to find out many details about a submitted job, including an estimated starting time. Try submitting lesson_6/job_script_3.sh take a note of the JOBID and use this command to get job information:
+> You can use `scontrol` to find out many details about a submitted job, including an estimated
+> starting time. Try submitting lesson_6/job_script_3.sh take a note of the JOBID and use this
+> command to get job information:
 > <pre style="color: silver; background: black;">$ scontrol show job JOBID </pre>
-> Look for *StartTime* (it might take a few minutes for SLURM to assign a place in the queue to the job). What do you notice? Are the resources requested reasonable for this job? 
+> Look for *StartTime* (it might take a few minutes for SLURM to assign a place in the queue to
+> the job). What do you notice? Are the resources requested reasonable for this job? 
 {: .challenge}
 
 {% include links.md %}

@@ -93,9 +93,20 @@ login and should have the same effect as editing *.bashrc*.
 
 ## Partitions
 
-Partitions in the context of SCW systems refer to groups of nodes with certain capabilities/features in common. You can list the partitions available to you with the following command:
+Partitions in the context of SCW systems refer to groups of nodes with certain
+capabilities/features in common. You can list the partitions available to you with the
+following command:
 
-Hawk:
+
+{::options parse_block_html="true" /}
+<div>
+  <ul class="nav nav-tabs" role="tablist">
+   <li role="presentation" class="active"><a data-os="hawk" href="#HAWK" aria-controls="HAWK" role="tab" data-toggle="tab">Hawk</a></li>
+   <li role="presentation"><a data-os="sunbird" href="#SUNBIRD" aria-controls="SUNBIRD" role="tab" data-toggle="tab">Sunbird</a></li>
+  </ul>
+
+ <div class="tab-content">
+  <article role="tabpanel" class="tab-pane active" id="HAWK">
 <pre style="color: silver; background: black;">$ sinfo
 PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
 compute\*       up 3-00:00:00    133  alloc ccs[0001-0009,0011-0134]
@@ -162,8 +173,9 @@ for different kind of jobs.
   <td> Production jobs </td>
  </tr>
 </table>
+  </article>
 
-Sunbird:
+  <article role="tabpanel" class="tab-pane" id="SUNBIRD">
 <pre style="color: silver; background: black;">$ sinfo
 PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
 PARTITION          AVAIL  TIMELIMIT  NODES  STATE NODELIST
@@ -229,6 +241,10 @@ for different kind of jobs.
   <td> Production jobs </td>
  </tr>
 </table>
+  </article>
+ </div>
+</div>
+
 
 NOTE: Any additional nodes not mentioned are not open to the public as they are research specific.
 > ## Testing your script
@@ -247,8 +263,8 @@ If your compute jobs on the cluster produce intermediate results, using your scr
 directory can be beneficial:
 
 - The scratch filesystem has a faster I/O speed than home.
-- It has a higher default quota (5 Tb) so you can store bigger input files if 
-  necessary. 
+- It has a higher default quota (3 TB on Hawk and 20 TB on Sunbird) so you can store
+  bigger input files if necessary. 
 
 Remember to instruct your scripts to clean after themselves by removing unnecessary 
 data, this prevents filling up your quota. Remember that unused files on scratch 
@@ -261,17 +277,25 @@ measured in bytes (kb, Mb, Tb) while file quota is measured in individual files
 (independent of their size). You can check your current quota with the command 
 **myquota**:
 
+{::options parse_block_html="true" /}
+<div>
+  <ul class="nav nav-tabs" role="tablist">
+   <li role="presentation" class="active"><a data-os="hawk" href="#quota-hawk" aria-controls="quota-hawk" role="tab" data-toggle="tab">Hawk</a></li>
+   <li role="presentation"><a data-os="sunbird" href="#quota-sunbird" aria-controls="quota-sunbird" role="tab" data-toggle="tab">Sunbird</a></li>
+  </ul>
+
+ <div class="tab-content">
+  <article role="tabpanel" class="tab-pane active" id="quota-hawk">
 <pre style="color: silver; background: black;">[new_user@cl1 ~]$ myquota
-HOME DIRECTORY c.medib
+HOME DIRECTORY new_user
      Filesystem   space   quota   limit   grace   files   quota   limit   grace
 chnfs-ib:/nfshome/store01
                     32K  51200M  53248M               8    100k    105k
 
-SCRATCH DIRECTORY c.medib
+SCRATCH DIRECTORY new_user
      Filesystem    used   quota   limit   grace   files   quota   limit   grace
-       /scratch      4k      0k      5T       -       1       0 3000000       -
-
- </pre>
+       /scratch      4k      0k      3T       -       1       0 3000000       -
+</pre>
 
 On account approval all users are allocated a default home quota of 50 Gb and 100 K 
 files. In the example above, the user has 32 Kb of data currently on home, if the 
@@ -279,10 +303,36 @@ user were to go beyond 51200 Mb, it would enter a grace period of 6 days to redu
 the storage footprint. After this grace period or if hitting 53248 Mb, the user 
 wouldn't be able to create any more files. Something similar applies to file quota.
 
-On scratch, new users are allocated a default quota of 5 Tb and 3M files. The main 
+On scratch, new users are allocated a default quota of 3 Tb and 3M files. The main 
 difference with home quota is that in scratch there is no grace period (that is what 
 the *0* under quota tries to signify) but for all intents and purposes behaves in the
 same manner as home.
+
+  </article>
+
+  <article role="tabpanel" class="tab-pane" id="quota-sunbird">
+<pre style="color: silver; background: black;">[new_user@sl1 ~]$ myquota
+HOME DIRECTORY new_user
+     Filesystem   space   quota   limit   grace   files   quota   limit   grace
+/lustrehome         32K    100G    110G       -       8   100000  110000      -
+
+SCRATCH DIRECTORY new_user
+     Filesystem    used   quota   limit   grace   files    quota    limit   grace
+       /scratch      4k   19.5T     20T       -       1  9750066 10000066       -
+</pre>
+On account approval all users are allocated a default home quota of 100 Gb and 110 K 
+files. In the example above, the user has 32 Kb of data currently on home, if the 
+user were to go beyond 100 GB, it would enter a grace period of 6 days to reduce 
+the storage footprint. After this grace period or if hitting 110 GB, the user 
+wouldn't be able to create any more files. Something similar applies to file quota.
+
+On scratch, new users are allocated a default quota of 20 Tb and 10 M files and works
+in a similar way as in Home.
+
+  </article>
+ </div>
+</div>
+
 
 > ## My application used to work ...
 > 
@@ -321,7 +371,7 @@ same manner as home.
 >
 > Did you know that Cardiff University offer a **Research Data Store**? Cardiff 
 > researchers can apply for 1Tb of storage (more storage can be provided depending on
-> certain criteria). Find out more on the <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
+> certain criteria). Find out more on Cardiff University <a href="https://intranet.cardiff.ac.uk/staff/supporting-your-work/research-support/equipment-and-resources/research-data-storage-service" target="_blank">intranet</a>.
 >
 {: .callout}
 
