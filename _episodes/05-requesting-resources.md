@@ -15,7 +15,8 @@ keypoints:
 - "Use replacement patterns to uniquely identify your log files"
 - "SLURM has several commands to help you interact with jobs and partitions"
 ---
-
+## Aberystwyth Users
+For this section make sure to use your partition is *compute*, account is *scw2196* and reservation is *scw2196_201* (monday) or *scw2196_201* (tuesday).
 ## How to request resources
 Setting the correct resource requirements will help to ensure a faster turnaround time on the supercomputer. For this, users need to interact with SLURM, the supercomputer's job scheduler, that is in charge of allocating resources to jobs from all users.
 
@@ -27,8 +28,12 @@ There are two ways to request resources:
 Sometimes is useful to request a node for an interactive session that allows you to use it as if you would be in a login node. The `srun` command allows you to do this, it will add your resource request to the queue and once allocated it will start a new bash session on the granted nodes.
 > ## Requesting an interactive job (1)
 > Try the following command
+>
+> Hawk:
 > <pre style="color: silver; background: black;">$ srun -n 1 -p c_compute_mdi1 --account=scw1148 --reservation=training --pty bash </pre>
 >
+> Sunbird:
+> <pre style="color: silver; background: black;">$ srun -n 1 -p c_compute --account=scw2196 --reservation=scwXXXX --pty bash </pre>
 > What happened? Since the command is using a special reservation for this training session, the time to allocate resources should have been small and you should have been taken to a new node (from cl1 to ccs0076, for example). Once inside the work node, you can run your applications as if you were in the login node but without the restrictions. 
 > While we are here try this command and put attention to the output:
 > <pre style="color: silver; background: black;">$ env | grep SLURM  </pre>

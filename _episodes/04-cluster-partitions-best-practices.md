@@ -95,6 +95,7 @@ login and should have the same effect as editing *.bashrc*.
 
 Partitions in the context of SCW systems refer to groups of nodes with certain capabilities/features in common. You can list the partitions available to you with the following command:
 
+Hawk:
 <pre style="color: silver; background: black;">$ sinfo
 PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
 compute\*       up 3-00:00:00    133  alloc ccs[0001-0009,0011-0134]
@@ -162,6 +163,74 @@ for different kind of jobs.
  </tr>
 </table>
 
+Sunbird:
+<pre style="color: silver; background: black;">$ sinfo
+PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
+PARTITION          AVAIL  TIMELIMIT  NODES  STATE NODELIST
+compute*              up 3-00:00:00      2  fail* scs[0050,0097]
+compute*              up 3-00:00:00      2 drain* scs[0041,0056]
+compute*              up 3-00:00:00     17  down* scs[0011,0020,0023,0034,0048-0049,0055,0064,0086,0094,0110,0113,0115-0118,0121]
+compute*              up 3-00:00:00     13  drain scs[0013,0025,0028,0030-0031,0039,0043,0047,0060,0067,0071,0080,0104]
+compute*              up 3-00:00:00      2   resv scs[0111,0120]
+compute*              up 3-00:00:00     55    mix scs[0001,0003-0006,0008,0014-0019,0021-0022,0026,0029,0032,0037,0040,0042,0045-0046,0051-0053,0057,0059,0063,0065,0069-0070,0073-0079,0081-0082,0085,0087-0091,0093,0096,0098,0103,0106-0108,0112,0122]
+compute*              up 3-00:00:00     20  alloc scs[0007,0009,0012,0024,0027,0035-0036,0038,0044,0054,0066,0083-0084,0092,0095,0100,0102,0109,0114,0123]
+compute*              up 3-00:00:00     12   down scs[0002,0010,0033,0058,0061-0062,0068,0072,0099,0101,0105,0119]
+gpu                   up 2-00:00:00      1    mix scs2001
+gpu                   up 2-00:00:00      3   idle scs[2002-2004]
+development           up      30:00      2  fail* scs[0050,0097]
+development           up      30:00      2 drain* scs[0041,0056]
+development           up      30:00     17  down* scs[0011,0020,0023,0034,0048-0049,0055,0064,0086,0094,0110,0113,0115-0118,0121]
+development           up      30:00     13  drain scs[0013,0025,0028,0030-0031,0039,0043,0047,0060,0067,0071,0080,0104]
+development           up      30:00      2   resv scs[0111,0120]
+development           up      30:00     55    mix scs[0001,0003-0006,0008,0014-0019,0021-0022,0026,0029,0032,0037,0040,0042,0045-0046,0051-0053,0057,0059,0063,0065,0069-0070,0073-0079,0081-0082,0085,0087-0091,0093,0096,0098,0103,0106-0108,0112,0122]
+development           up      30:00     20  alloc scs[0007,0009,0012,0024,0027,0035-0036,0038,0044,0054,0066,0083-0084,0092,0095,0100,0102,0109,0114,0123]
+development           up      30:00     12   down scs[0002,0010,0033,0058,0061-0062,0068,0072,0099,0101,0105,0119]
+accel_ai              up 2-00:00:00      1    mix scs2041
+accel_ai              up 2-00:00:00      4   idle scs[2042-2045]
+xaccel_ai             up 2-00:00:00      1    mix scs2041
+xaccel_ai             up 2-00:00:00      5   idle scs[2042-2046]
+accel_ai_dev          up    2:00:00      1    mix scs2041
+accel_ai_dev          up    2:00:00      4   idle scs[2042-2045]
+accel_ai_mig          up   12:00:00      1   idle scs2046
+s_compute_chem        up 3-00:00:00      2    mix scs[3001,3003]
+s_compute_chem_rse    up    1:00:00      2    mix scs[3001,3003]
+s_gpu_eng             up 2-00:00:00      1   idle scs2021
+s_highmem_opt         up 3-00:00:00      1   idle scs0160
+</pre>
+
+In the output above the user has access to several partitions and should submit jobs 
+depending on the application requirements since each partition is ideally designed
+for different kind of jobs.
+
+<table style="width:100%">
+ <tr>
+  <th> Partition </th>
+  <th> Meant for </th>
+  <th> Avoid </th>
+ </tr>
+ <tr>
+  <td> compute </td>
+  <td> Parallel and MPI jobs </td>
+  <td> Serial (non-MPI) jobs </td>
+ </tr>
+ <tr>
+  <td> gpu </td>
+  <td> GPU (CUDA) jobs - V100 </td>
+  <td> Non-GPU jobs </td>
+ </tr>
+ <tr>
+  <td> accel_ai </td>
+  <td> GPU (CUDA) jobs - A100 </td>
+  <td> Non-GPU jobs </td>
+ </tr>
+ <tr>
+  <td> dev </td>
+  <td> Testing and development </td>
+  <td> Production jobs </td>
+ </tr>
+</table>
+
+NOTE: Any additional nodes not mentioned are not open to the public as they are research specific.
 > ## Testing your script
 >
 > Notice the *dev* entry in the *sinfo* output above? This is the development 

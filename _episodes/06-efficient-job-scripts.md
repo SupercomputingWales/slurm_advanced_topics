@@ -16,6 +16,11 @@ keypoints:
 - "Hawk has a Quality of Service feature on partitions that sets limits to users on how many jobs can queued, run at the same time, maximum number of CPUs and nodes"
 ---
 
+## Aberystwyth Users
+For this section make sure to use your partition is *compute*, account is *scw2196* and reservation is *scw2196_201* (monday) or *scw2196_201* (tuesday).
+
+
+
 ## Job Arrays
 
 SLURM and other job schedulers have a convenient feature known as *Job arrays* that allow repetitive tasks to be run lots of times. The structure of an array job script is very similar to a regular one with the addition of *--array* and the possibility of use new replacement patterns and environment variables. Take a look to the script below:
@@ -25,7 +30,7 @@ SLURM and other job schedulers have a convenient feature known as *Job arrays* t
 #SBATCH --job-name=array-example
 #SBATCH -o %x.o.%A.%a
 #SBATCH -e %x.e.%A.%a
-#SBATCH --partition=c_compute_mdi1
+#SBATCH --partition=c_compute_mdi1 (hawk) compute (sunbird)
 #SBATCH --ntasks=1
 #SBATCH --time=00:05:00
 #SBATCH --array=1-4
@@ -76,7 +81,7 @@ Might be easier to explain it with an example. Consider the following script:
 #SBATCH -o %x.o.%J
 #SBATCH -e %x.e.%J
 #SBATCH --ntasks=4
-#SBATCH -p c_compute_mdi1
+#SBATCH -p c_compute_mdi1 (hawk) compute (sunbird)
 #SBATCH --time=00:05:00
 #SBATCH --reservation=training
 #SBATCH --account=scw1148

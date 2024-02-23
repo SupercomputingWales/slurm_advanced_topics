@@ -21,7 +21,7 @@ The aim of OpenOndemand is to make software easy to use.  Most popular tools are
 
 Below are some points about specific application in OpenOndemand
 
-## Rstudio
+## Rstudio (not included on sunbird)
 
 [Rstudio](https://rstudio.com) is a useful tool to program and access R.  Whilst we recommend running the GUI via ARCOndemand it is possible to load the module within a Slurm job to get access to the same version of R as used via ARCOndemand.
 

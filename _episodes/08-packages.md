@@ -86,7 +86,7 @@ dependencies between the packages.  For a user on Hawk it may require 2 steps.
 To create a virtual environment and update Pip (updating Pip resolves odd behaviour especially when detecting available platform downloads) run:
 ~~~
 $ python3 -m venv my_env
-$ ./my_env/bin/activate
+$ source ./my_env/bin/activate
 $ pip install --upgrade pip
 ~~~
 

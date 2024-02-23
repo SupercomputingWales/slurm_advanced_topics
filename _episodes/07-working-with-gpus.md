@@ -19,6 +19,7 @@ keypoints:
 ## Available GPU devices
 There are currently two types of GPU devices available to our uses on two partitions, *gpu* and gpu_v100 which offer *P100* and *V100* generation NVIDIA cards respectively.
 
+Hawk:
 <table>
  <thead>
   <tr>
@@ -43,6 +44,26 @@ There are currently two types of GPU devices available to our uses on two partit
   </tfoot>
 </table>
 
+Sunbird: all GPU nodes are V100
+<table>
+ <thead>
+  <tr>
+   <th>Partition name</th>
+   <th>Number of nodes</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>gpu</td>
+   <td>4</td>
+  </tr>
+ </tbody>
+  <tfoot style="text-align:right">
+   <tr>
+     <td colspan="2"> All GPU nodes have 2 GPU devices </td>
+   </tr>
+  </tfoot>
+</table>
 The main difference between these devices is on the availability of Tensor cores on the *V100*. Tensor cores are a new type of programmable core exclusive to GPUs based on the Volta architecture that run alongside standard CUDA cores. Tensor cores can accelerate mixed-precision matrix multiply and accumulate calculations in a single operation. This capability is specially significant for AI/DL/ML applications that rely on large matrix operations.
 <table>
  <tr>
@@ -93,7 +114,7 @@ module load gromacs/2018.2-single-gpu
 ~~~
 {: .language-bash}
 
-### GPU compute modes
+### GPU compute modes (not included on sunbird)
 NVIDIA GPU cards can be operated in a number of Compute Modes. In short the difference is whether multiple processes (and, theoretically, users) can access (share) a GPU or if a GPU is exclusively bound to a single process. It is typically application-specific whether one or the other mode is needed, so please pay particular attention to example job scripts. GPUs on SCW systems default to ‘shared’ mode.
 
 Users are able to set the Compute Mode of GPUs allocated to their job through a pair of helper scripts that should be called in a job script in the following manner:
@@ -132,7 +153,7 @@ The latest NVIDIA driver version on the GPU nodes is 418.39 for CUDA 10.1  which
 
 ## Running a GPU job
 Here is a job script to help you submit a "hello-world" GPU job:
-
+Hawk:
 ~~~
 #!/bin/bash --login
 #SBATCH --job-name=gpu.example
@@ -149,6 +170,42 @@ clush -w $SLURM_NODELIST "sudo /apps/slurm/gpuset_3_exclusive"
 
 module purge
 module load keras/2.3.1
+module list
+
+test=imdb
+input_dir=$SLURM_SUBMIT_DIR
+WDPATH=/scratch/$USER/gpu.example.${test}.$SLURM_JOBID
+rm -rf ${WDPATH}
+mkdir -p ${WDPATH}
+cd ${WDPATH}
+cp ${input_dir}/${test}.py ${WDPATH}
+
+start="$(date +%s)"
+time python -u -i ${test}.py
+stop="$(date +%s)"
+finish=$(( $stop-$start ))
+echo gpu test ${test} $SLURM_JOBID Job-Time $finish seconds
+echo Keras End Time is `date`
+~~~
+{: .language-bash}
+
+Sunbird:
+~~~
+#!/bin/bash --login
+#SBATCH --job-name=gpu.example
+#SBATCH --error=%x.e.%J
+#SBATCH --output=%x.o.%J
+#SBATCH --partition=gpu
+#SBATCH --time=00:10:00
+#SBATCH --ntasks=40
+#SBATCH --ntasks-per-node=40
+#SBATCH --gres=gpu:2
+#SBATCH --account=scw2196
+
+
+
+module purge
+module load tensorflow/1.11-gpu
 module list
 
 test=imdb
