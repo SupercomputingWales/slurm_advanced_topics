@@ -11,7 +11,7 @@ This workshop intends to provide users with some advanced tools to interact with
 
 > ## Prerequisites
 >
-> Command line and SLURM experience is necessary for this lesson. We recommend the participants to take our Supercomputing for Begginers course.
+> Command line and SLURM experience is necessary for this lesson. We recommend the participants to take our Supercomputing for Beginners course.
 {: .prereq}
 
 {% include links.md %}
